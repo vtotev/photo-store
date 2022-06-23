@@ -1,13 +1,11 @@
 package softuni.photostore.service.impl;
 
 import org.springframework.stereotype.Service;
-import softuni.photostore.model.entity.BaseModel;
 import softuni.photostore.model.view.HomepageItemViewModel;
 import softuni.photostore.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.random.RandomGenerator;
 
 @Service
 public class HomeServiceImpl implements HomeService {
