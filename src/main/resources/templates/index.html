@@ -10,15 +10,16 @@
     <div class="jumbotron">
         <div class="container align-content-center rounded p-5 pt-1">
             <div class="row bg-dark bg-opacity-25 p-2">
-                <h3 class="pl-5 pt-2 text-white text-light text-center">Добре дошли във фотографски магазин "Photo Store"</h3>
+                <h3 class="pl-5 pt-2 text-white text-light text-center">Добре дошли във фотографски магазин "Photo
+                    Store"</h3>
                 <img src="/images/photostore.jpg">
 
-            <div class="row">
                 <h5 class="pl-5 pt-4 text-light text-center text-decoration-underline">Избрани продукти</h5>
                 <!--            СПИСЪК С КАМЕРИТЕ-->
-                <div class="container-fluid">
+                <div class="container-fluid" style="align-content: space-evenly">
                     <div class="overflow-auto pagination" style="overflow-x: visible">
-                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6 pb-1" th:each="c : ${models}"
+                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6 pb-1"
+                             th:each="c : ${models}"
                              th:object="${c}">
                             <a class="page-link bg-dark bg-opacity-50 text-white h-100"
                                style="border-color: transparent"
@@ -39,9 +40,8 @@
                     </div>
                 </div>
             </div>
-            </div>
-
         </div>
+    </div>
 </main>
 
 <footer th:replace="fragments/common::footer"></footer>
