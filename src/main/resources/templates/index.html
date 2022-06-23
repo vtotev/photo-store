@@ -17,7 +17,7 @@
                 <h5 class="pl-5 pt-4 text-light text-center text-decoration-underline">Избрани продукти</h5>
                 <!--            СПИСЪК С КАМЕРИТЕ-->
                 <div class="container-fluid">
-                    <div class="overflow-auto pagination">
+                    <div class="overflow-auto pagination" style="overflow-x: visible">
                         <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-6 col-6 pb-1" th:each="c : ${models}"
                              th:object="${c}">
                             <a class="page-link bg-dark bg-opacity-50 text-white h-100"
