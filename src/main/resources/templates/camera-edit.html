@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="text-center text-white">Редактиране на модел фотоапарат</h2>
+        <form
+                th:action="@{/cameras/manage/edit/{id}(id=${cameraModel.id})}"
+                th:method="post"
+                th:object="${cameraModel}"
+                enctype="multipart/form-data"
+                class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center text-white">
+
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="brand" class=" font-weight-bold">Производител</label>
+                    <select id="brand" name="brand" class="form-select">
+                        <option selected>Изберете производител</option>
+                        <option th:each="b : ${brands}" th:object="${b}" th:text="*{brandName}" th:value="*{brandName}"
+                                th:selected="${cameraModel.getBrand().brandName} == *{brandName}">brand
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="cameraType" class=" font-weight-bold">Тип фотоапарат</label>
+                    <select id="cameraType" name="cameraType" class="form-select"
+                            aria-describedby="cameraTypeHelpInline">
+                        <option value="" selected>Тип фотоапарат</option>
+                        <option th:each="ct : ${T(softuni.photostore.model.entity.enums.CameraTypeEnum).values()}"
+                                th:text="${ct.getTitle()}"
+                                th:value="${ct.name()}"
+                        th:selected="${cameraModel.getCameraType().name()} == ${ct.name()}">
+                        </option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('cameraType')}" th:errors="*{cameraType}"
+                           id="cameraTypeHelpInline" class="bg-danger text-light rounded">
+                        Трябва да изберете типа на фотоапарата!
+                    </small>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="camName" class="font-weight-bold">Модел</label>
+                    <input id="camName"
+                           name="camName"
+                           th:field="*{modelName}"
+                           th:errorclass="is-invalid"
+                           type="text" min="3" class="form-control"
+                           placeholder="Модел камера"/>
+                    <p th:if="${#fields.hasErrors('modelName')}" th:errors="*{modelName}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Модела на фотоапарата е задължителен и трябва да е между 3 и 200 символа!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="sensorSize" class=" font-weight-bold">Размер на сензора</label>
+                    <select id="sensorSize" name="sensorSize" class="form-select"
+                            aria-describedby="categoryHelpInline">
+                        <option value="" selected>Тип размер на сензора</option>
+                        <option th:each="ct : ${T(softuni.photostore.model.entity.enums.CameraSensorSizeEnum).values()}"
+                                th:text="${ct.getDisplayName()}"
+                                th:value="${ct.name()}"
+                        th:selected="${ct.name()} == ${cameraModel.sensorSize.name()}">
+                        </option>
+                    </select>
+                    <small th:if="${#fields.hasErrors('sensorSize')}" th:errors="*{sensorSize}"
+                           id="sensorSizeHelpInline" class="bg-danger text-light rounded">
+                        Трябва да изберете размер на сензора за фотоапарата!
+                    </small>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="resolution" class=" font-weight-bold">Сензор</label>
+                    <div class="input-group mb-3">
+                        <input id="resolution"
+                               name="resolution"
+                               th:field="*{megapixels}"
+                               th:errorclass="is-invalid"
+                               type="number" min="0" step="0.1" class="form-control"
+                               placeholder="Сензор"/>
+                        <span class="input-group-text">MPx</span>
+                        <p th:if="${#fields.hasErrors('megapixels')}" th:errors="*{megapixels}"
+                           class="invalid-feedback errors alert alert-danger">
+                            Нужно е да въведете колко мегапиксела е фотоапарата!
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="quantity" class=" font-weight-bold">Наличност</label>
+                    <input id="quantity"
+                           name="quantity"
+                           th:field="*{quantity}"
+                           th:errorclass="is-invalid"
+                           type="number" min="0" class="form-control"
+                           placeholder="Наличност"/>
+                    <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Нужно е да въведете наличността на модела!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="price" class=" font-weight-bold">Цена с ДДС</label>
+                    <div class="input-group mb-3">
+                        <input id="price"
+                               name="price"
+                               th:field="*{price}"
+                               th:errorclass="is-invalid"
+                               type="number" min="0" step="0.5" class="form-control"
+                               placeholder="Цена с ДДС"/>
+                        <span class="input-group-text">лв.</span>
+                        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"
+                           class="invalid-feedback errors alert alert-danger">
+                            Нужно е да въведете цена на фотоапарата!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="picture" class=" font-weight-bold">Снимка</label>
+                    <input class="form-control" type="file" name="picture" id="picture">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="description" class=" font-weight-bold">Описание</label>
+                    <textarea th:class="form-control" id="description"
+                              name="description"
+                              th:field="*{description}"
+                              th:errorclass="is-invalid"
+                              rows="6"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Описанието е задължително!
+                    </p>
+                </div>
+            </div>
+
+
+            <!--            <div class="row">-->
+            <!--                <div class="form-group col-md-6 mb-3">-->
+            <!--                    <label for="firstName" class=" font-weight-bold">Собствено име</label>-->
+            <!--                    <input-->
+            <!--                            id="firstName"-->
+            <!--                            th:field="*{firstName}"-->
+            <!--                            th:errorclass="is-invalid"-->
+            <!--                            type="text"-->
+            <!--                            class="form-control"-->
+            <!--                            placeholder="Име"/>-->
+            <!--                    <p class="invalid-feedback errors alert alert-danger">-->
+            <!--                        Собственото име е задължително и трябва да е между 4 и 20 букви.-->
+            <!--                    </p>-->
+            <!--                </div>-->
+            <!--                <div class="form-group col-md-6 mb-3">-->
+            <!--                    <label for="lastName" class=" font-weight-bold">Фамилно име</label>-->
+            <!--                    <input id="lastName"-->
+            <!--                           name="lastName"-->
+            <!--                           th:field="*{lastName}"-->
+            <!--                           th:errorclass="is-invalid"-->
+            <!--                           type="text" min="4" max="20" class="form-control"-->
+            <!--                           placeholder="Фамилия"/>-->
+            <!--                    <p class="invalid-feedback errors alert alert-danger">-->
+            <!--                        Фамилното име е задължително и трябва да е между 4 и 20 букви.-->
+            <!--                    </p>-->
+            <!--                </div>-->
+
+            <!--            </div>-->
+
+            <!--            <div class="row">-->
+            <!--                <div class="form-group col-md-6 mb-3">-->
+            <!--                    <label for="password" class=" font-weight-bold">Парола</label>-->
+            <!--                    <input id="password"-->
+            <!--                           name="password"-->
+            <!--                           th:field="*{password}"-->
+            <!--                           th:errorclass="is-invalid"-->
+            <!--                           type="password" min="4" max="20" class="form-control"-->
+            <!--                           placeholder="Парола"/>-->
+            <!--                    <p class="invalid-feedback errors alert alert-danger">-->
+            <!--                        Паролата е задължителна-->
+            <!--                    </p>-->
+            <!--                </div>-->
+            <!--                <div class="form-group col-md-6 mb-3">-->
+            <!--                    <label for="confirmPassword" class=" font-weight-bold">Потвърди парола</label>-->
+            <!--                    <input id="confirmPassword"-->
+            <!--                           th:field="*{confirmPassword}"-->
+            <!--                           type="password" min="4" max="20" class="form-control"-->
+            <!--                           placeholder="Потвърдете паролата"/>-->
+            <!--                    <p class="invalid-feedback errors alert alert-danger">-->
+            <!--                        Потвърждението на паролата е задължително-->
+            <!--                    </p>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--            <div th:if="${userNameOccupied}" class="row">-->
+            <!--                <div class="form-group col-md-12 mb-6">-->
+            <!--                    <p class="errors alert alert-danger">-->
+            <!--                        Потребителското име е вече заето!-->
+            <!--                    </p>-->
+            <!--                </div>-->
+            <!--            </div>-->
+
+            <div class="row mt-3">
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-end">
+                        <input type="submit" class="btn btn-info btn-lg" value="Запази"/>
+                    </div>
+                </div>
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-start">
+                        <a class="btn btn-info btn-lg" href="/cameras/manage" role="button">Отказ</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="fragments/common::footer"></footer>
+</body>
+</html>

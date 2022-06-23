@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+
+<main role="main">
+    <div class="jumbotron">
+        <div class="container align-content-center rounded p-5 pt-1">
+            <div class="row bg-dark bg-opacity-25 p-2">
+                <h3 class="pl-5 pt-2 text-white text-light text-center">Добре дошли във фотографски магазин "Photo Store"</h3>
+                <img src="/images/photostore.jpg">
+
+            <div class="row">
+                <h5 class="pl-5 pt-4 text-light text-center text-decoration-underline">Избрани продукти</h5>
+                <!--            СПИСЪК С КАМЕРИТЕ-->
+                <div class="container-fluid">
+                    <div class="overflow-auto pagination">
+                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-3 col-3 pb-1" th:each="c : ${models}"
+                             th:object="${c}">
+                            <a class="page-link bg-dark bg-opacity-50 text-white h-100"
+                               style="border-color: transparent"
+                               th:href="@{/{link}(link=*{getItemUrl()})}">
+                                <div class="row mt-1 mb-1">
+                                    <div class="row-cols-auto">
+                                        <img th:src="*{pictures.url}" class="img-thumbnail img-fluid shadow-lg">
+                                        <!--                                         th:href="@{/cameras/{id}(id=*{id})}">-->
+                                    </div>
+                                    <div class="col">
+                                        <div class="row text-center pt-1">
+                                            <h6 th:text="*{modelName}"></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+</main>
+
+<footer th:replace="fragments/common::footer"></footer>
+</body>
+</html>
