@@ -57,3 +57,12 @@ form.main-form {
 .logged-user {
      color: white;
 }
+
+.wrap-lenses {
+     min-width: 48vmin;
+
+     /*camera ->  style="min-width: 38vmin"*/
+     /*flashes ->  style="min-width: 30vmin"*/
+     /*bags ->  style="min-width: 25vmin"*/
+     /*tripods ->  style="min-width: 25vmin"*/
+}

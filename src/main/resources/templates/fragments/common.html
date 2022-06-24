@@ -38,7 +38,7 @@
                         <ul class="dropdown-menu" aria-labelledby="camerasMenu">
                             <li th:each="c : ${T(softuni.photostore.model.entity.enums.CameraTypeEnum).values()}">
                                 <a class="dropdown-item text-wrap"
-                                   th:href="@{/cameras/{type}(type=*{c.getHref()})}" style="min-width: 38vmin">
+                                   th:href="@{/cameras/{type}(type=*{c.getHref()})}">
                                     <img th:src="*{'/images/cameras/' + c.name() + '.png'}" width="64"
                                          th:text="*{' ' + c.getTitle()}"></a>
                             </li>
@@ -63,8 +63,8 @@
 
                             <li th:each="l : ${T(softuni.photostore.model.entity.enums.LensMountTypeEnum).values()}">
 
-                                <a class="dropdown-item text-wrap"
-                                   th:href="@{/lenses/{type}(type=*{l.getHref()})}" style="min-width: 48vmin">
+                                <a class="dropdown-item text-wrap wrap-lenses"
+                                   th:href="@{/lenses/{type}(type=*{l.getHref()})}">
                                     <img th:src="*{'/images/lenses/' + l.name() + '.png'}" width="64"
                                          th:text="*{' ' + l.getTitle()}"></a>
                             </li>
@@ -91,7 +91,7 @@
                             <li th:each="c : ${cameraBrands}">
 
                                 <a class="dropdown-item text-wrap"
-                                   th:href="@{/flashes/{type}(type=*{c.getBrandName()})}" style="min-width: 30vmin">
+                                   th:href="@{/flashes/{type}(type=*{c.getBrandName()})}">
                                     <img src="/images/flashes/flash.png" height="48"
                                          th:text="*{' Светкавици за ' + c.getBrandName()}"></a>
                             </li>
@@ -118,7 +118,7 @@
                             <li th:each="b : ${T(softuni.photostore.model.entity.enums.BagTypeEnum).values()}">
 
                                 <a class="dropdown-item text-wrap"
-                                   th:href="@{/bags/{type}(type = ${b.name().toLowerCase()})}" style="min-width: 25vmin">
+                                   th:href="@{/bags/{type}(type = ${b.name().toLowerCase()})}">
                                     <img th:src="*{'/images/bags/' + b.name() + '.png'}" height="48"
                                          th:text="*{' '+ b.getTitle()}"></a>
                             </li>
@@ -143,7 +143,7 @@
                         <ul class="dropdown-menu" aria-labelledby="tripodsMenu">
                             <li>
                                 <a class="dropdown-item text-wrap"
-                                   th:href="@{/tripods}" style="min-width: 25vmin">
+                                   th:href="@{/tripods}">
                                     <img src="/images/tripod.png" width="64" th:text="'Всички стативи'">
                                 </a>
                             </li>

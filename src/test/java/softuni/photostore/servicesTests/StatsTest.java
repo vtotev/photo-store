@@ -20,15 +20,15 @@ public class StatsTest {
         sut = new StatsServiceImpl();
     }
 
-//    @Test
-//    public void testOnRequest() {
-//        sut.onRequest();
-//        StatsView stats = sut.getStats();
-//        assertThat(stats).isNotNull();
-//        assertThat(stats.getAnonRequests()).isEqualTo(1);
-//        assertThat(stats.getAuthRequests()).isEqualTo(0);
-//        assertThat(stats.getTotalRequests()).isEqualTo(1);
-//    }
+    @Test
+    public void testOnRequest() {
+        sut.onRequest();
+        StatsView stats = sut.getStats();
+        assertThat(stats).isNotNull();
+        assertThat(stats.getAnonRequests()).isEqualTo(1);
+        assertThat(stats.getAuthRequests()).isEqualTo(0);
+        assertThat(stats.getTotalRequests()).isEqualTo(1);
+    }
 
     @Test
     public void testGetStats() {
