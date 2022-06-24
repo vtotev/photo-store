@@ -118,7 +118,7 @@
 
                                 <a class="dropdown-item"
                                    th:href="@{/bags/{type}(type = ${b.name().toLowerCase()})}">
-                                    <img th:src="*{'/images/bags/' + b.name() + '.png'}" height="48"
+                                    <img th:src="*{'/images/bag-images/' + b.name() + '.png'}" height="48"
                                          th:text="*{' '+ b.getTitle()}"></a>
                             </li>
 
