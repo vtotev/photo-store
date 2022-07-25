@@ -1,5 +1,7 @@
 package softuni.photostore.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import softuni.photostore.model.binding.FlashAddBindingModel;
 import softuni.photostore.model.binding.FlashBrandAddBindingModel;
 import softuni.photostore.model.binding.FlashEditBindingModel;
@@ -47,4 +49,9 @@ public interface FlashService {
     FlashViewModel getFlashDetailsViewById(String id);
 
     List<HomepageItemViewModel> getRandom3Flashes();
+
+    @CacheEvict(value = "randomFlashes", allEntries = true)
+    default void clearCache() {
+
+    }
 }

@@ -1,6 +1,7 @@
 package softuni.photostore.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import softuni.photostore.model.binding.TripodAddBindingModel;
 import softuni.photostore.model.binding.TripodBrandAddBindingModel;
@@ -142,6 +143,7 @@ public class TripodServiceImpl implements TripodService {
     }
 
     @Override
+    @Cacheable("randomTripods")
     public List<HomepageItemViewModel> getRandom3Tripods() {
         List<HomepageItemViewModel> models = new ArrayList<>();
         tripodRepository

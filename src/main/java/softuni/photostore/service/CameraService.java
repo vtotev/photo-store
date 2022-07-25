@@ -1,5 +1,7 @@
 package softuni.photostore.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import softuni.photostore.model.binding.CameraAddBindingModel;
 import softuni.photostore.model.binding.CameraBrandAddBindingModel;
 import softuni.photostore.model.entity.BaseModel;
@@ -39,4 +41,9 @@ public interface CameraService {
     List<CameraManageViewModel> getAllCamerasForManagement();
 
     List<HomepageItemViewModel> getRandom3Cameras();
+
+    @CacheEvict(value = "randomCameras", allEntries = true)
+    default void clearCache() {
+
+    }
 }

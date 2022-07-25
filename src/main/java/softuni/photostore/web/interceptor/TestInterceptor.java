@@ -19,13 +19,13 @@ public class TestInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        String fileExtRegex = "[.][\\w]{2,4}";
+        String fileExtRegex = "[.][\\w\\W]{2,4}";
         Pattern pattern = Pattern.compile(fileExtRegex);
         String url = request.getRequestURL().toString();
         url = url.substring(url.lastIndexOf("/"));
         Matcher matcher = pattern.matcher(url);
         if (!matcher.find()) {
-            System.out.println(url);
+            System.out.println(request.getRequestURL().toString());
         }
 //        while (matcher.find()) {
 //            System.out.println(matcher.group());

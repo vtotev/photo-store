@@ -1,5 +1,7 @@
 package softuni.photostore.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import softuni.photostore.model.binding.LensAddBindingModel;
 import softuni.photostore.model.binding.LensBrandAddBindingModel;
 import softuni.photostore.model.binding.LensEditBindingModel;
@@ -47,4 +49,9 @@ public interface LensService {
     LensViewModel getLensDetailsById(String id);
 
     List<HomepageItemViewModel> getRandom3Lenses();
+
+    @CacheEvict(value = "randomLenses", allEntries = true)
+    default void clearCache() {
+
+    }
 }

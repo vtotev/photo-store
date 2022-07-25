@@ -21,6 +21,7 @@ import softuni.photostore.service.BagsService;
 import softuni.photostore.service.CartService;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -183,4 +184,8 @@ public class BagsController {
         cartService.addItemToCart(bagsService.getBagById(id), context, BagModel.class);
         return "redirect:/bags/details/" + id;
     }
+
+
+    }
+
 }

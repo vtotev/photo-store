@@ -1,5 +1,7 @@
 package softuni.photostore.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import softuni.photostore.model.binding.BagAddBindingModel;
 import softuni.photostore.model.binding.BagBrandAddBindingModel;
 import softuni.photostore.model.binding.BagEditBindingModel;
@@ -48,4 +50,8 @@ public interface BagsService {
 
     List<HomepageItemViewModel> getRandom3Bags();
 
+    @CacheEvict(value = "randomBags", allEntries = true)
+    default void clearCache() {
+
+    }
 }

@@ -1,5 +1,7 @@
 package softuni.photostore.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import softuni.photostore.model.binding.TripodAddBindingModel;
 import softuni.photostore.model.binding.TripodBrandAddBindingModel;
 import softuni.photostore.model.binding.TripodEditBindingModel;
@@ -47,4 +49,9 @@ public interface TripodService {
     List<TripodViewModel> getAllTripodsByFilterCriteria(TripodFilterModel filter);
 
     List<HomepageItemViewModel> getRandom3Tripods();
+
+    @CacheEvict(value = "randomTripods", allEntries = true)
+    default void clearCache() {
+
+    }
 }

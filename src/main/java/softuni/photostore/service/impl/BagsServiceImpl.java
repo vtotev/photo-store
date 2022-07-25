@@ -1,6 +1,7 @@
 package softuni.photostore.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import softuni.photostore.model.binding.BagAddBindingModel;
 import softuni.photostore.model.binding.BagBrandAddBindingModel;
@@ -146,6 +147,7 @@ public class BagsServiceImpl implements BagsService {
     }
 
     @Override
+    @Cacheable("randomBags")
     public List<HomepageItemViewModel> getRandom3Bags() {
         List<HomepageItemViewModel> models = new ArrayList<>();
         bagsRepository

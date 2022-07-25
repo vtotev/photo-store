@@ -1,6 +1,7 @@
 package softuni.photostore.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import softuni.photostore.model.binding.CameraAddBindingModel;
 import softuni.photostore.model.binding.CameraBrandAddBindingModel;
@@ -130,6 +131,7 @@ public class CameraServiceImpl implements CameraService {
     }
 
     @Override
+    @Cacheable("randomCameras")
     public List<HomepageItemViewModel> getRandom3Cameras() {
         List<HomepageItemViewModel> models = new ArrayList<>();
         cameraRepository

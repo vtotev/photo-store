@@ -1,6 +1,7 @@
 package softuni.photostore.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import softuni.photostore.model.binding.LensAddBindingModel;
 import softuni.photostore.model.binding.LensBrandAddBindingModel;
@@ -125,6 +126,7 @@ public class LensServiceImpl implements LensService {
     }
 
     @Override
+    @Cacheable("randomLenses")
     public List<HomepageItemViewModel> getRandom3Lenses() {
         List<HomepageItemViewModel> models = new ArrayList<>();
         lensRepository
