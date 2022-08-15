@@ -181,13 +181,10 @@
                     </div>
 
                     <div sec:authorize="isAuthenticated()">
-<!--                        <div sec:authorize="!hasRole('ADMIN')">-->
-                            <a class="dropdown-item" th:href="@{/manage/user/edit}">Промяна на данни</a>
-                            <a class="dropdown-item" th:href="@{/manage/user/changepassword}">Смяна на парола</a>
-<!--                        </div>-->
+                        <a class="dropdown-item" th:href="@{/manage/user/edit}">Промяна на данни</a>
+                        <a class="dropdown-item" th:href="@{/manage/user/changepassword}">Смяна на парола</a>
 
                         <form th:action="@{/users/logout}" th:method="post">
-<!--                            <input class="dropdown-item" type="submit" value="Изход">-->
                             <button type="submit" class="dropdown-item btn-dark logoutBtn">
                                 <img src="/images/logout.png" height="24" th:text="Изход">
                             </button>
@@ -199,7 +196,7 @@
                             <div class="mb-3">
                                 <label for="username" class="form-label">Потребителско име</label>
                                 <input th:value="${username}" type="text" class="form-control" id="username"
-                                       name="username" placeholder="email@example.com">
+                                       name="username" placeholder="Your username">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Парола</label>
@@ -282,7 +279,8 @@
 </header>
 
 <footer th:fragment="footer" class="container text-white bg-blur text-center fixed-bottom">
-    <p th:text="'Photo Store © 2022 Valeri Totev  /  Page requests: authorized: ' + ${stats.getAuthRequests()} + ' / anonymous: ' + ${stats.getAnonRequests()}">Photo Store © 2022 Valeri Totev</p>
+    <p th:text="'Photo Store © 2022 Valeri Totev  /  Page requests: authorized: ' + ${stats.getAuthRequests()} + ' / anonymous: ' + ${stats.getAnonRequests()}">
+        Photo Store © 2022 Valeri Totev</p>
     <p>Photo Store © 2022 Valeri Totev</p>
 </footer>
 </body>
