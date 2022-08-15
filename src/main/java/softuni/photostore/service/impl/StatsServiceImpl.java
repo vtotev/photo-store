@@ -18,8 +18,6 @@ public class StatsServiceImpl implements StatsService {
         getContext().
         getAuthentication();
 
-
-
     if (authentication != null && (authentication.getPrincipal() instanceof UserDetails)) {
       authRequests++;
     } else {

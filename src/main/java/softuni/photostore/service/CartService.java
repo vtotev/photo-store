@@ -11,14 +11,18 @@ import java.util.List;
 
 public interface CartService {
 
-    //    CartItem addItemToCart(String customerId, String remoteIP, BaseModel product, Integer quantity, String productType);
     CartItem addItemToCart(BaseModel product, SecurityContext context, Class productClass);
-
-    CartItem updateItemQuantity(CartItem item, Integer quantity);
 
     void removeItemFromCartById(String itemId);
 
     List<CartItemListView> getCartForCurrentUserOrIP(User user, String remoteIP);
 
     void cleanCart(LocalDateTime dateTime);
+
+    CartItem getCartItemById(String productId);
+
+    void incQuantity(String productId, Integer incWith);
+
+    void decQuantity(String productId, Integer decWith);
+
 }

@@ -5,6 +5,7 @@ import softuni.photostore.model.view.HomepageItemViewModel;
 import softuni.photostore.service.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -24,7 +25,6 @@ public class HomeServiceImpl implements HomeService {
         this.tripodService = tripodService;
     }
 
-
     @Override
     public List<HomepageItemViewModel> getRandom3ProductsForHomepage() {
         List<HomepageItemViewModel> models = new ArrayList<>();
@@ -33,7 +33,7 @@ public class HomeServiceImpl implements HomeService {
         models.addAll(flashService.getRandom3Flashes());
         models.addAll(bagsService.getRandom3Bags());
         models.addAll(tripodService.getRandom3Tripods());
-        models.sort((o1, o2) -> Integer.compare(o1.hashCode(), o2.hashCode()));
+        models.sort(Comparator.comparingInt(Object::hashCode));
         return models;
     }
 }

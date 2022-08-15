@@ -1,20 +1,16 @@
 package softuni.photostore.web;
 
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.authentication.AuthenticationTrustResolverImpl;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import softuni.photostore.model.entity.accounts.User;
-import softuni.photostore.service.CameraService;
-import softuni.photostore.service.CartService;
-import softuni.photostore.service.UsersService;
+import softuni.photostore.model.view.CartItemListView;
+import softuni.photostore.service.*;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.List;
 
 @ControllerAdvice
 public class CommonsController {
@@ -23,10 +19,16 @@ public class CommonsController {
     private final UsersService usersService;
     private final CartService cartService;
 
-    public CommonsController(CameraService cameraService, UsersService usersService, CartService cartService) {
+    private final CommonsService commonsService;
+
+    private final StatsService statsService;
+
+    public CommonsController(CameraService cameraService, UsersService usersService, CartService cartService, CommonsService commonsService, StatsService statsService) {
         this.cameraService = cameraService;
         this.usersService = usersService;
         this.cartService = cartService;
+        this.commonsService = commonsService;
+        this.statsService = statsService;
     }
 
 
@@ -36,20 +38,22 @@ public class CommonsController {
     }
 
     @ModelAttribute
-    public void getCartItems(@CurrentSecurityContext SecurityContext context, Model model) {
-        User user = null;
-        String remoteIP = "";
-        Authentication authentication = context.getAuthentication();
-        if (authentication != null) {
-            AuthenticationTrustResolver authenticationTrustResolver = new AuthenticationTrustResolverImpl();
-            if (!authenticationTrustResolver.isAnonymous(authentication)) {
-                user = usersService.getUserByUsername(authentication.getName());
-            }
-            if (context.getAuthentication().getDetails() instanceof WebAuthenticationDetails) {
-                WebAuthenticationDetails authDetails = (WebAuthenticationDetails) context.getAuthentication().getDetails();
-                remoteIP = authDetails.getRemoteAddress();
-            }
-        }
-        model.addAttribute("cartItems", cartService.getCartForCurrentUserOrIP(user, remoteIP));
+    public void getStats(Model model) {
+        model.addAttribute("stats", statsService.getStats());
     }
+
+    @ModelAttribute
+    public void getCartItems(@CurrentSecurityContext SecurityContext context, Model model) {
+        Object[] userData = commonsService.getSessionUserInfo(context);
+        User user = (User) userData[0];
+        String remoteIP = (String) userData[1];
+        List<CartItemListView> cartItems = cartService.getCartForCurrentUserOrIP(user, remoteIP);
+        double cartSum = cartItems.stream().mapToDouble(cartItemListView -> {
+            return cartItemListView.getQuantity() * cartItemListView.getPrice().doubleValue();
+        }).sum();
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("totalCartSum", cartSum);
+    }
+
+
 }

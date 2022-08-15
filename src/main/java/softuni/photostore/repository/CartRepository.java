@@ -12,12 +12,10 @@ import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<CartItem, String> {
-
     List<CartItem> getAllByCustomerId(String customerId);
 
     @Query("select c from CartItem c where c.customerId = 'anonymousUser' and c.customerIP = :ip")
     List<CartItem> getAllByCustomerIP(@Param("ip") String customerIP);
-
     Optional<CartItem> getCartItemByCustomerIdAndCustomerIPAndProductId(String customerId, String customerIP, String productId);
 
     @Query("select c from CartItem c where c.dateAdded <= :dateAdded")

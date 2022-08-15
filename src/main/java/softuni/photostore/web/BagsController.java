@@ -185,7 +185,4 @@ public class BagsController {
         return "redirect:/bags/details/" + id;
     }
 
-
-    }
-
 }

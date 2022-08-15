@@ -129,8 +129,8 @@ public class LensesController {
 
     @PostMapping("/lenses/manage/model/add")
     public String addLensConfirm(@Valid LensAddBindingModel lensAdd,
-                                   BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes) {
+                                 BindingResult bindingResult,
+                                 RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || lensAdd.getPicture().isEmpty()) {
             redirectAttributes.addFlashAttribute("lensModel", lensAdd);
             redirectAttributes.addFlashAttribute("noPictureSelected", lensAdd.getPicture().isEmpty());
@@ -164,9 +164,9 @@ public class LensesController {
 
     @PostMapping("/lenses/manage/edit/{id}")
     public String editLensConfirm(@PathVariable String id,
-                                    @Valid LensEditBindingModel editModel,
-                                    BindingResult bindingResult,
-                                    RedirectAttributes redirectAttributes) {
+                                  @Valid LensEditBindingModel editModel,
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("lensModel", editModel);

@@ -189,26 +189,12 @@ public class CameraController {
     @GetMapping("/cameras/details/{id}")
     public String showCameraDetails(@PathVariable String id, Model model) {
         model.addAttribute("camera", cameraService.getCameraDetailsById(id));
-//        model.addAttribute("remoteip", ((WebAuthenticationDetails) context.getAuthentication().getDetails()).getRemoteAddress());
         return "camera-details";
     }
 
     @PostMapping("/cameras/details/{id}")
     public String addToCart(@PathVariable String id, @CurrentSecurityContext SecurityContext context) {
         cartService.addItemToCart(cameraService.getCameraById(id), context, CameraModel.class);
-//        User user = null;
-//        String remoteIP = "";
-//        var product = cameraService.getCameraById(id);
-//        Authentication authentication = context.getAuthentication();
-//        AuthenticationTrustResolver authenticationTrustResolver = new AuthenticationTrustResolverImpl();
-//        if (!authenticationTrustResolver.isAnonymous(authentication)) {
-//            user = usersService.getUserByUsername(authentication.getName());
-//        }
-//        if (context.getAuthentication().getDetails() instanceof WebAuthenticationDetails) {
-//            WebAuthenticationDetails authDetails = (WebAuthenticationDetails) context.getAuthentication().getDetails();
-//            remoteIP = authDetails.getRemoteAddress();
-//        }
-//        cartService.addItemToCart(user != null ? user.getId() : context.getAuthentication().getName(), remoteIP, product, 1, product.getClass().getSimpleName());
         return "redirect:/cameras/details/" + id;
     }
 }

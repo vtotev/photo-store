@@ -70,30 +70,6 @@ public class CartServiceImpl implements CartService {
         return cartRepository.save(item);
     }
 
-//    @Override
-//    public CartItem addItemToCart(String customerId, String remoteIP, BaseModel product, Integer quantity, String productType) {
-//        CartItem item = new CartItem();
-//        item
-//                .setCustomerId(customerId)
-//                .setCustomerIP(remoteIP)
-//                .setProductName(product.getModelName())
-//                .setProductId(product.getId())
-//                .setQuantity(quantity)
-//                .setPrice(product.getPrice())
-//                .setProductType(productType)
-//                .setPictureUrl(product.getPictures().getUrl())
-//                .setDateAdded(LocalDateTime.now());
-//        return cartRepository.save(item);
-//    }
-
-    @Override
-    public CartItem updateItemQuantity(CartItem item, Integer quantity) {
-        CartItem byId = cartRepository.getById(item.getId());
-        byId.setQuantity(quantity)
-                .setDateAdded(LocalDateTime.now());
-        return cartRepository.save(byId);
-    }
-
     @Override
     public void removeItemFromCartById(String itemId) {
         cartRepository.deleteById(itemId);
@@ -117,4 +93,30 @@ public class CartServiceImpl implements CartService {
         cartItems.forEach(c -> cartRepository.deleteById(c.getId()));
     }
 
+    @Override
+    public CartItem getCartItemById(String productId) {
+        return cartRepository.findById(productId).orElse(null);
+    }
+
+    @Override
+    public void incQuantity(String productId, Integer incWith) {
+        if (incWith > 0) {
+            CartItem cartItem = getCartItemById(productId);
+            cartItem.setQuantity(cartItem.getQuantity() + incWith);
+            cartRepository.save(cartItem);
+        }
+    }
+
+    @Override
+    public void decQuantity(String productId, Integer decWith) {
+        if (decWith > 0) {
+            CartItem cartItem = getCartItemById(productId);
+            cartItem.setQuantity(cartItem.getQuantity() - decWith);
+            if (cartItem.getQuantity() <= 0) {
+                cartRepository.delete(cartItem);
+            } else {
+                cartRepository.save(cartItem);
+            }
+        }
+    }
 }

@@ -268,7 +268,7 @@
                             <div class="dropdown-divider"></div>
                             <li class="cartAll">
                                 <a class="dropdown-item text-black"
-                                   th:href="@{/shopping/cart}">
+                                   th:href="@{/cart}">
                                     <img src="/images/shopping_cart.png" width="32" th:text=" 'Към кошницата'">
                                 </a>
                             </li>
@@ -282,6 +282,7 @@
 </header>
 
 <footer th:fragment="footer" class="container text-white bg-blur text-center fixed-bottom">
+    <p th:text="'Photo Store © 2022 Valeri Totev  /  Page requests: authorized: ' + ${stats.getAuthRequests()} + ' / anonymous: ' + ${stats.getAnonRequests()}">Photo Store © 2022 Valeri Totev</p>
     <p>Photo Store © 2022 Valeri Totev</p>
 </footer>
 </body>

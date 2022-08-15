@@ -15,7 +15,6 @@
                             <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                                 <a href="#" id="pop">
                                     <img id="imageresource" th:src="*{pictures.url}" class="img-fluid shadow-lg">
-                                    <!--                                        <img th:src="*{pictures.url}" class="img-fluid shadow-lg">-->
                                 </a>
 
                             </div>
@@ -49,8 +48,6 @@
                                             </div>
                                         </form>
                                     </a>
-
-                                    <!--                                    <a class="btn btn-success" href="/" th:if="*{quantity > 0}">Купи</a>-->
                                     <a class="btn btn-success disabled" th:unless="*{quantity > 0}">Купи</a>
                                 </div>
                             </div>

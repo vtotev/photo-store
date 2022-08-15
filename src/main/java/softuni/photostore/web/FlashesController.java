@@ -126,8 +126,8 @@ public class FlashesController {
 
     @PostMapping("/flashes/manage/model/add")
     public String addFlashConfirm(@Valid FlashAddBindingModel flashAdd,
-                                   BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes) {
+                                  BindingResult bindingResult,
+                                  RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors() || flashAdd.getPictures().isEmpty()) {
             redirectAttributes.addFlashAttribute("flashModel", flashAdd);
             redirectAttributes.addFlashAttribute("noPictureSelected", flashAdd.getPictures().isEmpty());
@@ -163,9 +163,9 @@ public class FlashesController {
 
     @PostMapping("/flashes/manage/edit/{id}")
     public String editFlashConfirm(@PathVariable String id,
-                                    @Valid FlashEditBindingModel editModel,
-                                    BindingResult bindingResult,
-                                    RedirectAttributes redirectAttributes) {
+                                   @Valid FlashEditBindingModel editModel,
+                                   BindingResult bindingResult,
+                                   RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("flashModel", editModel);
