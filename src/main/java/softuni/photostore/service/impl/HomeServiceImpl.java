@@ -26,6 +26,14 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
+    public void cleanRandom3ProductsCache() {
+        bagsService.clearCache();
+        cameraService.clearCache();
+        flashService.clearCache();
+        lensService.clearCache();
+        tripodService.clearCache();
+    }
+    @Override
     public List<HomepageItemViewModel> getRandom3ProductsForHomepage() {
         List<HomepageItemViewModel> models = new ArrayList<>();
         models.addAll(cameraService.getRandom3Cameras());
