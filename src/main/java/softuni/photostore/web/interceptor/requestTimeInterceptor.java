@@ -27,7 +27,8 @@ public class requestTimeInterceptor implements HandlerInterceptor {
         long hours = TimeUnit.MILLISECONDS.toHours(diff);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(diff);
-        System.out.printf("Time Taken: %s:%s:%s - Request URL: %s%n", hours, minutes, seconds, request.getRequestURL());
+        long miliseconds = TimeUnit.MILLISECONDS.toMillis(diff);
+        System.out.printf("Time Taken: %s:%s:%s:%s - Request URL: %s%n", hours, minutes, seconds, miliseconds, request.getRequestURL());
     }
 
 }
