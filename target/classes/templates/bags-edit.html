@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="text-center text-white">Редактиране на чанта или раница</h2>
+        <form
+                th:action="@{/bags/manage/edit/{id}(id=${bagModel.id})}"
+                th:method="post"
+                th:object="${bagModel}"
+                enctype="multipart/form-data"
+                class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="brand" class="text-white font-weight-bold">Производител</label>
+                    <select id="brand" name="brand" class="form-select" th:errorclass="is-invalid"
+                            aria-describedby="brandHelpInline">
+                        <option value="" selected>Изберете производител</option>
+                        <option th:each="b : ${brands}" th:object="${b}"
+                                th:text="*{brandName}"
+                                th:value="*{brandName}"
+                                th:selected="${bagModel.brand != null} ? ${bagModel.brand} == *{brandName}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете производител!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="bagType" class="text-white font-weight-bold">Тип</label>
+                    <select id="bagType" name="bagType" class="form-select"
+                            th:errorclass="is-invalid"
+                            aria-describedby="cameraTypeCompatibilityHelpInline">
+                        <option value="" selected>Изберете тип</option>
+                        <option th:each="ct : ${T(softuni.photostore.model.entity.enums.BagTypeEnum).values()}"
+                                th:text="${ct.getTitle()}"
+                                th:value="${ct.name()}"
+                                th:selected="${bagModel.bagType != null} ? ${ct.name()} == *{bagType.name()}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('bagType')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете тип на обекта!
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="modelName" class="text-white font-weight-bold">Модел</label>
+                    <input id="modelName"
+                           name="modelName"
+                           th:field="*{modelName}"
+                           th:errorclass="is-invalid"
+                           type="text" min="3" class="form-control"
+                           placeholder="Модел"/>
+                    <p th:if="${#fields.hasErrors('modelName')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Име на модела на чанта/раница е задължителен и трябва да е между 3 и 200 символа!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="quantity" class="text-white font-weight-bold">Наличност</label>
+                    <input id="quantity"
+                           name="quantity"
+                           th:field="*{quantity}"
+                           th:errorclass="is-invalid"
+                           type="number" min="0" class="form-control"
+                           placeholder="Наличност"/>
+                    <p th:if="${#fields.hasErrors('quantity')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Нужно е да въведете наличността на модела!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="price" class="text-white font-weight-bold">Цена с ДДС</label>
+                    <div class="input-group mb-3">
+                        <input id="price"
+                               name="price"
+                               th:field="*{price}"
+                               th:errorclass="is-invalid"
+                               type="number" min="0" step="0.5" class="form-control"
+                               placeholder="Цена с ДДС"/>
+                        <span class="input-group-text">лв.</span>
+                        <p th:if="${#fields.hasErrors('price')}"
+                           class="invalid-feedback errors alert alert-danger">
+                            Нужно е да въведете цена на обектива!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="pictures" class="text-white font-weight-bold">Снимка</label>
+                    <input class="form-control" type="file" name="pictures" id="pictures">
+                    <p th:if="${noPictureSelected}" class="alert alert-danger mt-1">
+                        Снимката е задължителна!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="description" class="text-white font-weight-bold">Описание</label>
+                    <textarea th:class="form-control" id="description"
+                              name="description"
+                              th:field="*{description}"
+                              th:errorclass="is-invalid"
+                              rows="6"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Описанието е задължително!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-end">
+                        <input type="submit" class="btn btn-info btn-lg" value="Запази"/>
+                    </div>
+                </div>
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-start">
+                        <a class="btn btn-info btn-lg" href="/bags/manage" role="button">Отказ</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="fragments/common::footer"></footer>
+</body>
+</html>

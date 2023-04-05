@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2 class="text-center text-white">Добавяне на обектив</h2>
+        <form
+                th:action="@{/lenses/manage/model/add}"
+                th:method="post"
+                th:object="${lensModel}"
+                enctype="multipart/form-data"
+                class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="brand" class="text-white font-weight-bold">Производител</label>
+                    <select id="brand" name="brand" class="form-select" th:errorclass="is-invalid"
+                            aria-describedby="brandHelpInline">
+                        <option value="" selected>Изберете производител</option>
+                        <option th:each="b : ${brands}" th:object="${b}"
+                                th:text="*{brandName}"
+                                th:value="*{brandName}"
+                                th:selected="${lensModel.brand != null} ? ${lensModel.brand} == *{brandName}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете производител!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="cameraBrandCompatibility" class="text-white font-weight-bold">Съвместимост с фотоапарати
+                        на</label>
+                    <select id="cameraBrandCompatibility" name="cameraBrandCompatibility" class="form-select"
+                            th:errorclass="is-invalid"
+                            aria-describedby="brandCompatibilityHelpInline">
+                        <option value="" selected>Съвместимост с фотоапарати на...</option>
+                        <option th:each="b : ${brandsCompatibility}" th:object="${b}"
+                                th:text="*{brandName}"
+                                th:value="*{brandName}"
+                                th:selected="${lensModel.cameraBrandCompatibility != null} ? ${lensModel.cameraBrandCompatibility} == *{brandName}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете с кои фотоапарати ще е съвместим!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="cameraTypeCompatibility" class="text-white font-weight-bold">Тип фотоапарат</label>
+                    <select id="cameraTypeCompatibility" name="cameraTypeCompatibility" class="form-select"
+                            th:errorclass="is-invalid"
+                            aria-describedby="cameraTypeCompatibilityHelpInline">
+                        <option value="" selected>Тип фотоапарат</option>
+                        <option th:each="ct : ${T(softuni.photostore.model.entity.enums.LensMountTypeEnum).values()}"
+                                th:text="${ct.getTitle()}"
+                                th:value="${ct.name()}"
+                                th:selected="${lensModel.cameraTypeCompatibility != null} ? ${ct.name()} == *{cameraTypeCompatibility.name()}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('cameraTypeCompatibility')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете типа на фотоапарата!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="sensorSizeCompatibility" class="text-white font-weight-bold">Покритие на сензора</label>
+                    <select id="sensorSizeCompatibility" name="sensorSizeCompatibility" class="form-select"
+                            th:errorclass="is-invalid"
+                            aria-describedby="cameraTypeCompatibilityHelpInline">
+                        <option value="" selected>Покритие на сензора</option>
+                        <option th:each="ct : ${T(softuni.photostore.model.entity.enums.CameraSensorSizeEnum).values()}"
+                                th:text="${ct.getDisplayName()}"
+                                th:value="${ct.name()}"
+                                th:selected="${lensModel.sensorSizeCompatibility != null} ? ${ct.name()} == *{sensorSizeCompatibility.name()}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('sensorSizeCompatibility')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете покритие на сензора на фотоапарата!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="modelName" class="text-white font-weight-bold">Модел</label>
+                    <input id="modelName"
+                           name="modelName"
+                           th:field="*{modelName}"
+                           th:errorclass="is-invalid"
+                           type="text" min="3" class="form-control"
+                           placeholder="Модел на обектива"/>
+                    <p th:if="${#fields.hasErrors('modelName')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Модела на обектива е задължителен и трябва да е между 3 и 200 символа
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="lensType" class="text-white font-weight-bold">Тип на обектива</label>
+                    <select id="lensType" name="lensType" class="form-select"
+                            th:errorclass="is-invalid"
+                            aria-describedby="lensTypeHelpInline">
+                        <option value="" selected>Тип на обектива</option>
+                        <option th:each="ct : ${T(softuni.photostore.model.entity.enums.LensTypeEnum).values()}"
+                                th:text="${ct.getTitle()}"
+                                th:value="${ct.name()}"
+                                th:selected="${lensModel.lensType != null} ? ${ct.name()} == *{lensType.name()}">
+                        </option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" class="invalid-feedback errors alert alert-danger">
+                        Трябва да изберете тип на обектива!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="fastestAperture" class="text-white font-weight-bold">Максимална светлосила</label>
+                    <input id="fastestAperture"
+                           name="fastestAperture"
+                           th:field="*{fastestAperture}"
+                           th:errorclass="is-invalid"
+                           type="number" min="0" step="0.1" class="form-control"
+                           placeholder="Максимална светлосила"/>
+                    <p th:if="${#fields.hasErrors('fastestAperture')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Нужно е да въведете максимална светлосила на обектива!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="quantity" class="text-white font-weight-bold">Наличност</label>
+                    <input id="quantity"
+                           name="quantity"
+                           th:field="*{quantity}"
+                           th:errorclass="is-invalid"
+                           type="number" min="0" class="form-control"
+                           placeholder="Наличност"/>
+                    <p th:if="${#fields.hasErrors('quantity')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Нужно е да въведете наличността на модела!
+                    </p>
+                </div>
+
+                <div class="form-group col-md-6 mb-3">
+                    <label for="price" class="text-white font-weight-bold">Цена с ДДС</label>
+                    <div class="input-group mb-3">
+                        <input id="price"
+                               name="price"
+                               th:field="*{price}"
+                               th:errorclass="is-invalid"
+                               type="number" min="0" step="0.5" class="form-control"
+                               placeholder="Цена с ДДС"/>
+                        <span class="input-group-text">лв.</span>
+                        <p th:if="${#fields.hasErrors('price')}"
+                           class="invalid-feedback errors alert alert-danger">
+                            Нужно е да въведете цена на обектива!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="picture" class="text-white font-weight-bold">Снимка</label>
+                    <input class="form-control" type="file" name="picture" id="picture">
+                    <p th:if="${noPictureSelected}" class="alert alert-danger mt-1">
+                        Снимката е задължителна!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group mb-3">
+                    <label for="description" class="text-white font-weight-bold">Описание</label>
+                    <textarea th:class="form-control" id="description"
+                              name="description"
+                              th:field="*{description}"
+                              th:errorclass="is-invalid"
+                              rows="6"></textarea>
+                    <p th:if="${#fields.hasErrors('description')}"
+                       class="invalid-feedback errors alert alert-danger">
+                        Описанието е задължително!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-end">
+                        <input type="submit" class="btn btn-info btn-lg" value="Добави"/>
+                    </div>
+                </div>
+                <div class="col col-md-6">
+                    <div class="button-holder d-flex justify-content-start">
+                        <a class="btn btn-info btn-lg" href="/lenses/manage" role="button">Отказ</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="fragments/common::footer"></footer>
+</body>
+</html>

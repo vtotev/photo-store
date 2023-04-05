@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="container text-dark text-center">
+            <h1 class="display-6">
+                <strong class="rounded border-white pl-3 font-weight-bold">Администриране на стативи</strong>
+            </h1>
+        </div>
+        <div class="form-group row">
+            <div class="form-group col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                <div class="container bg-gradient rounded p-3 mt-2">
+                    <div class="row pb-1">
+                        <div class="col">
+                            <h5 class="text-dark fw-bolder">Производители</h5>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-success float-end" data-bs-toggle="modal"
+                                    data-bs-target="#addBrand">
+                                Добави
+                            </button>
+
+                            <!-- Add Brand Modal -->
+                            <div class="modal fade" id="addBrand" tabindex="-1"
+                                 aria-labelledby="addBrandLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content bg-info bg-opacity-75 border-danger"
+                                         th:object="${newBrand}">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="addBrandLabel">Добавяне на производител</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <form th:action="@{/tripods/manage/brand/add}"
+                                              th:method="POST">
+                                            <div class="modal-body text-wrap">
+                                                <label for="brand-name" class="form-label">Име на производител</label>
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control" id="brand-name"
+                                                           th:field="*{brandName}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-danger btn-lg"
+                                                        data-bs-toggle="modal">Да
+                                                </button>
+                                                <button type="button" class="btn btn-secondary btn-lg"
+                                                        data-bs-dismiss="modal">
+                                                    Не
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <script>
+                                    let element = document.getElementById('brand-name')
+                                    document.getElementById('addBrand').addEventListener('shown.bs.modal', function () {
+                                        element.focus()
+                                    })
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-dark table-hover table-striped align-middle text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Марка</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="b : ${brands}" th:object="${b}">
+                            <th scope="row" th:text="*{brandName}"></th>
+                            <td>
+                                <div class="float-end">
+                                    <button type="button" class="btn mybtn" data-bs-toggle="modal"
+                                            th:data-bs-target="'#deleteBrand_'+ *{id}">
+                                        <img src="/images/delete.png" width="40"/>
+                                    </button>
+
+                                    <!-- Delete Brand Modal -->
+                                    <div class="modal fade" th:id="'deleteBrand_'+ *{id}" tabindex="-1"
+                                         aria-labelledby="deleteBrandLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content bg-info bg-opacity-75 border-danger">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteBrandLabel">Изтриване на
+                                                        производител</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-wrap"
+                                                     th:text="'Производител ' + *{brandName} + ' ще бъде изтрит. Сигурни ли сте, че искате да продължите?'">
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <form th:object="${b}"
+                                                          th:action="@{/tripods/manage/brand/delete/{id}(id=*{id})}"
+                                                          th:method="post">
+
+                                                        <button type="submit" class="btn btn-danger btn-lg"
+                                                                data-bs-toggle="modal">Да
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-secondary btn-lg"
+                                                            data-bs-dismiss="modal">
+                                                        Не
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="form-group col">
+                <div class="container bg-gradient rounded p-3 mt-2">
+
+                    <div class="row pb-1">
+                        <div class="col">
+                            <h5 class="text-dark fw-bolder">Модели</h5>
+                        </div>
+                        <div class="col">
+                            <a class="btn btn-success float-end" th:href="@{/tripods/manage/add}" role="button">Добави</a>
+                        </div>
+                    </div>
+
+
+                    <table class="table table-dark table-striped table-hover align-middle text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col">Марка</th>
+                            <th scope="col">Модел</th>
+                            <th scope="col">Наличност</th>
+                            <th scope="col">Цена</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="c : ${tripods}" th:object="${c}">
+                            <th scope="row" th:text="*{brand}">brand</th>
+                            <td th:text="*{modelName}">model</td>
+                            <td th:text="*{quantity}">quantity</td>
+                            <td th:text="*{price}">price</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a class="btn mybtn" th:href="@{/tripods/manage/edit/{id}(id = *{id})}" role="button">
+                                        <img src="/images/edit.png" width="40" />
+                                    </a>
+                                    <button type="button" class="btn mybtn" data-bs-toggle="modal"
+                                            th:data-bs-target="'#deleteTripods_'+ *{id}">
+                                        <img src="/images/delete.png" width="40" />
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" th:id="'deleteTripods_'+ *{id}" tabindex="-1"
+                                         aria-labelledby="deleteTripodsLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content bg-info bg-opacity-75 border-danger">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteTripodsLabel">Изтрий</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-wrap"
+                                                     th:text="'Обективът ' + *{modelName} + ' ще бъде изтрит. Сигурни ли сте, че искате да продължите?'">
+                                                </div>
+                                                <div class="modal-footer justify-content-center">
+                                                    <form th:object="${c}"
+                                                          th:action="@{/tripods/manage/delete/{id}(id=*{id})}"
+                                                          th:method="POST">
+
+                                                        <button type="submit" class="btn btn-danger btn-lg"
+                                                                data-bs-toggle="modal">Да
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-secondary btn-lg"
+                                                            data-bs-dismiss="modal">
+                                                        Не
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <div th:if="${brandExisting}" onended="">
+
+                <div class="modal fade" id="brandAlreadyExists" tabindex="-1"
+                     aria-labelledby="brandAlreadyExistsLabel" aria-hidden="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-danger bg-opacity-75 text-white text-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="brandAlreadyExistsLabel">Грешка</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-wrap"
+                                 th:text="'Производител с посоченото име вече съществува!'">
+                                Производителят вече съществува!
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-warning" id="okbtn1" data-bs-dismiss="modal">Добре</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    let myBtn = document.getElementById('okbtn1')
+                    document.getElementById('brandAlreadyExists').addEventListener('shown.bs.modal', function () {
+                        myBtn.focus()
+                    })
+                    let myModal = new bootstrap.Modal(document.getElementById('brandAlreadyExists'))
+                    myModal.show();
+                </script>
+            </div>
+
+            <div th:if="${brandNotMeetingRequirements}" onended="">
+
+                <div class="modal fade" id="brandNotMeetingRequirements" tabindex="-1"
+                     aria-labelledby="brandNotMeetingRequirementsLabel" aria-hidden="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-danger bg-opacity-75 text-white text-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="brandNotMeetingRequirementsLabel">Грешка</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-wrap">
+                                Името на производителя трябва да е поне 3 символа!
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-warning" id="okbtn2" data-bs-dismiss="modal">Добре</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    let myBtn = document.getElementById('okbtn2')
+                    document.getElementById('brandNotMeetingRequirements').addEventListener('shown.bs.modal', function () {
+                        myBtn.focus()
+                    })
+                    let myModal = new bootstrap.Modal(document.getElementById('brandNotMeetingRequirements'))
+                    myModal.show();
+                </script>
+            </div>
+
+            <div th:if="${brandAddedSuccessfully}" onended="">
+
+                <div class="modal fade" id="brandAddedSuccessfully" tabindex="-1"
+                     aria-labelledby="brandAddedSuccessfullyLabel" aria-hidden="false">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-info bg-opacity-75 text-white text-center">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="brandAddedSuccessfullyLabel">Добавен</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-wrap">
+                                Производителят беше добавен успешно!
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-dark" id="okbtn3" data-bs-dismiss="modal">Добре</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script type="text/javascript">
+                    let myBtn = document.getElementById('okbtn3')
+                    document.getElementById('brandAddedSuccessfully').addEventListener('shown.bs.modal', function () {
+                        myBtn.focus()
+                    })
+                    let myModal = new bootstrap.Modal(document.getElementById('brandAddedSuccessfully'))
+                    myModal.show();
+                </script>
+            </div>
+        </div>
+
+    </div>
+</div>
+<footer th:replace="fragments/common::footer"></footer>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+
+<main role="main">
+    <div class="jumbotron">
+        <div class="container bg-dark bg-opacity-25 rounded mt-5 mb-2">
+            <div class="form-group row text-center pt-2">
+                <h5 class="display-6"><strong class="rounded font-weight-bold fst-italic">Кошница</strong></h5>
+            </div>
+
+            <div class="col-12 px-4 pb-4" th:unless="${cartItems.size() > 0}">
+                <div class="form-group row pt-3">
+                    <div class="container pb-1 bg-dark bg-opacity-50 text-white text-center">
+                        <h3 class="p-5 mt-5 mb-5">Кошницата е празна</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row" th:if="${cartItems.size() > 0}">
+                <div class="container bg-gradient rounded p-5 mt-2 pb-2">
+                    <table class="table table-dark table-striped align-middle text-center">
+                        <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col">Продукт</th>
+                            <th scope="col">Количество</th>
+                            <th scope="col">Цена</th>
+                            <th scope="col">Общо</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="a : ${cartItems}" th:object="${a}">
+                            <th scope="row">
+                                <img th:src="*{pictureUrl}" width="50px" height="50px">
+                            </th>
+                            <td th:text="*{productName}">ProductName</td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                              title="Намаляне на количеството">
+                                            <form th:object="${a}" th:action="@{/cart/dec/{id}(id=*{id})}"
+                                                  th:method="POST">
+                                                <button type="submit" class="btn mybtn">
+                                                <img src="/images/minus.png" width="30"/>
+                                                </button>
+                                            </form>
+                                        </span>
+                                    </div>
+                                    <div class="col-4">
+                                        <p th:text="*{quantity}"></p>
+                                    </div>
+                                    <div class="col-4">
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                              title="Увеличаване на количеството">
+                                            <form th:object="${a}" th:action="@{/cart/inc/{id}(id=*{id})}"
+                                                  th:method="POST">
+                                                <button type="submit" class="btn mybtn">
+                                                <img src="/images/plus.png" width="30"/>
+                                                </button>
+                                            </form>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </td>
+                            <td th:text="*{price}">Price</td>
+                            <td th:text="(*{quantity} * *{price})">ProductName</td>
+                            <td>
+                               <span data-bs-toggle="tooltip" data-bs-placement="top"
+                                     title="Премахване от кошницата">
+                                        <form th:object="${a}" th:action="@{/cart/remove/{id}(id=*{id})}"
+                                              th:method="POST">
+                                            <button type="submit" class="btn mybtn">
+                                            <img src="/images/delete.png" width="40"/>
+                                            </button>
+                                        </form>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row bg-dark bg-opacity-50 p-2 text-center text-white">
+                        <div class="col-8 pt-3">
+                            <h5 th:text="'Общо: ' + ${totalCartSum} + ' лв.'"></h5>
+                        </div>
+<!--                        to be done              -->
+                        <div class="col-2">
+                            <form method="post" th:action="@{/cameras/details/{id}(id=*{id})}"
+                                  class="px-4 py-3 text-light">
+                                <div class="button-holder d-flex justify-content-center align-content-center">
+                                    <input type="submit" class="btn btn-success disabled" value="Купи (checkout)"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-2">
+                            <form method="post" th:action="@{/cart/clear}"
+                                  class="px-4 py-3 text-light">
+                                <div class="button-holder d-flex justify-content-center align-content-center">
+                                    <input type="submit" class="btn btn-danger" value="Изчисти кошницата"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/common::footer"></footer>
+</body>
+</html>

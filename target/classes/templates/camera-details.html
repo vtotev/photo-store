@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<head th:replace="fragments/common::head"></head>
+<body class="body-main">
+<header th:replace="fragments/common::navigation"></header>
+<div class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col">
+                <div class="form-group row">
+                    <div class="container pb-2 pt-2 bg-dark bg-opacity-50 text-white" th:object="${camera}">
+                        <div class="row mt-1 mb-1">
+                            <div class="col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                <a href="#" id="pop">
+                                    <img id="imageresource" th:src="*{pictures.url}" class="img-fluid shadow-lg">
+                                </a>
+
+                            </div>
+                            <div class="col-sm-12 col-md col-lg col-xl col-xxl">
+                                <div class="row border-bottom">
+                                    <h3 th:text="*{modelName}"></h3>
+                                </div>
+                                <div class="row pt-3 pb-3 border-bottom">
+                                    <textbox th:text="*{description}"></textbox>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2 col-xxl-2">
+                                <div class="row text-center mt-2 pt-2">
+                                    <h5 th:text="'Цена: '+*{price} + ' лв.'"></h5>
+                                </div>
+
+                                <div class="row pt-3 text-center text-info" th:if="*{quantity > 0}">
+                                    <h6>В наличност</h6>
+                                </div>
+
+                                <div class="row pt-3 text-center text-danger" th:unless="*{quantity > 0}">
+                                    <h6>Изчерпан</h6>
+                                </div>
+
+                                <div class="row m-4 pt-4">
+                                    <a th:if="*{quantity > 0}">
+                                        <form method="post" th:action="@{/cameras/details/{id}(id=*{id})}"
+                                              class="px-4 py-3 text-light">
+                                            <div class="button-holder d-flex justify-content-center align-content-center">
+                                                <input type="submit" class="btn btn-success" value="Купи"/>
+                                            </div>
+                                        </form>
+                                    </a>
+                                    <a class="btn btn-success disabled" th:unless="*{quantity > 0}">Купи</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-body" style="width: auto; display: block; max-width: 100%; max-height: 100%">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteBrandLabel" th:text="${camera.modelName}"></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <img src="" class="imagepreview" style="display: flex; width: auto; max-width: 100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $("#pop").on("click", function () {
+                $('.imagepreview').attr('src', $('#imageresource').attr('src'));
+                $('#imagemodal').modal('show');
+            });
+        </script>
+
+    </div>
+</div>
+<footer th:replace="fragments/common::footer"></footer>
+
+</body>
+</html>

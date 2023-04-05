@@ -1,0 +1,126 @@
+body {
+    background-image: url(/images/background.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    /*background-size: auto;*/
+    /*background-position: center;*/
+    display: flex;
+    flex-direction: column;
+}
+
+.jumbotron{
+    /*background-color: rgba(0,0,0,0.05);*/
+    min-height: 80vh;
+    padding-top: 30px;
+    margin-bottom: 30px;
+}
+
+img {
+    padding-right: 8px;
+}
+
+.max-lines {
+    display: block;/* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
+
+footer {
+    line-height: 30px;
+    margin-top: 15px;
+    height: 30px;
+}
+
+.bg-blur {
+    background-color: rgba(0, 0, 0, 0.7); /* Black w/opacity/see-through */
+}
+
+.navbar {
+    background: #3d3d3d;
+}
+
+.navbar a:hover {
+    /*background-color: #1c1f23;*/
+    background-color: #464b51;
+    color: white;
+}
+
+.nav-link {
+    color: white;
+}
+
+.dropdown-menu {
+    /*background-color: #3d3d3d;*/
+    background-color: #5c636a;
+}
+
+.dropdown-item {
+    color: silver;
+}
+
+#lensesMenu, #camerasMenu, #flashesMenu, #bagsMenu, #LoginMenu, #tripodsMenu {
+    color: #9b9d9e;
+}
+
+.dropdown:not(#login):hover .dropdown-menu:not(#login) .dropdown:not(#cart):hover .dropdown-menu:not(#cart)  {
+    display: block;
+    margin-top: 0;
+}
+
+/*sidebar*/
+
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+#sidebar {
+    width: 250px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+textbox {
+    white-space: pre-wrap;
+}
+
+.mybtn {
+    width: 38px;
+    height: 38px;
+}
+
+.mybtn img {
+    margin-left: -10px;
+    margin-top: -4px;
+}
+
+.cartItem a:hover, .cartItem:hover{
+    /*background-color: silver;*/
+    background-color: transparent;
+}
+
+
+.cartAll a:hover, .cartAll:hover {
+    /*background-color: #1c1f23;*/
+    /*background-color: #464b51;*/
+    background-color: #afafaf;
+    color: white;
+}
+
+.logoutBtn a:hover, .logoutBtn:hover, .logoutBtn:before{
+    background-color: #464b51;
+    color: white;
+}
+
