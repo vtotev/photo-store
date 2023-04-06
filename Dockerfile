@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17jdk-apline
+FROM eclipe-temurin:117jdk-apline
 VOLUME /tmp
 COPY target/*.jar PhotoStore.jar
 ENTRYPOINT ["java", "-jar", "/PhotoStore.jar"]
