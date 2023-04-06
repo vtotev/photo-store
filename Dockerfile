@@ -1,4 +1,4 @@
-FROM openjdk:18
+FROM eclipse-temurin:18-alpine
 VOLUME /tmp
 COPY target/*.jar PhotoStore.jar
 ENTRYPOINT ["java", "-jar", "/PhotoStore.jar"]
