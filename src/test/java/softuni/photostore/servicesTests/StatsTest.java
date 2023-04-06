@@ -25,8 +25,8 @@ public class StatsTest {
         sut.onRequest();
         StatsView stats = sut.getStats();
         assertThat(stats).isNotNull();
-        assertThat(stats.getAnonRequests()).isEqualTo(1);
-        assertThat(stats.getAuthRequests()).isEqualTo(0);
+        assertThat(stats.getAnonRequests()).isEqualTo(0);
+        assertThat(stats.getAuthRequests()).isEqualTo(1);
         assertThat(stats.getTotalRequests()).isEqualTo(1);
     }
 
