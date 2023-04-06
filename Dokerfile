@@ -1,0 +1,5 @@
+FROM eclipse-temurin:17jdk-apline
+VOLUME /tmp
+COMY target/*.jar PhotoStore.jar
+ENTRYPOINT ["java", "-jar", "/PhotoStore.jar"]
+EXPOSE 8080
