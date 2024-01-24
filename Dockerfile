@@ -1,4 +1,8 @@
 FROM openjdk:17-oracle
+
+ENV JAVA_HOME /usr/local/openjdk-17
+ENV PATH $JAVA_HOME/bin:$PATH
+
 WORKDIR /app
 
 COPY .mvn .
