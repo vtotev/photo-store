@@ -1,6 +1,6 @@
 FROM openjdk:17-oracle
 
-WORKDIR /app
+WORKDIR ~/app
 
 COPY .mvn .mvn
 COPY mvnw .
