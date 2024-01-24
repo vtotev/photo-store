@@ -1,13 +1,13 @@
 FROM openjdk:17-oracle
 WORKDIR /app
 
-RUN apt-get update && \
-    apt-get install -y maven && \
-    mvn dependency:go-offline
+COPY .mvn .
+COPY mvnw .
+COPY mvnw.cmd .
 
 COPY src src
 
-RUN mvn package
+RUN ./mvnw package
 
 ENTRYPOINT ["java", "-jar", "target/PhotoStore-0.0.2-SNAPSHOT.jar"]
 EXPOSE 8080
