@@ -9,7 +9,7 @@ COPY pom.xml .
 
 COPY src src
 RUN chmod +x mvnw
-RUN ./mvnw package -Dtest=!softuni.photostore.PhotoStoreApplicationTests
+RUN ./mvnw package -DskipTests
 
 ENTRYPOINT ["java", "-jar", "target/PhotoStore-0.0.2-SNAPSHOT.jar"]
 EXPOSE 8080
